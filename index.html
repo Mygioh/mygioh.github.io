@@ -238,50 +238,88 @@
 
         .archive-section {
             display: flex;
+            flex-direction: column; /* Mobiili: pystysuuntainen pino */
             width: 100%;
-            height: 75vh;
+            height: 80vh; /* Riittävä korkeus kosketusnäytölle */
             min-height: 500px;
             border-bottom: 2px solid var(--brand-black);
             background-color: var(--brand-black);
             overflow: hidden;
         }
+        @media (min-width: 768px) {
+            .archive-section {
+                flex-direction: row; /* Työpöytä: vaakasuuntainen */
+                height: 75vh;
+            }
+        }
 
         .archive-folder {
             flex: 1;
             display: flex;
+            flex-direction: column; /* Mobiili: Välilehti ylhäällä, sisältö alla */
             position: relative;
             transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            border-right: 2px solid var(--brand-black);
+            border-bottom: 2px solid var(--brand-black);
             overflow: hidden;
             cursor: pointer;
         }
+        @media (min-width: 768px) {
+            .archive-folder {
+                flex-direction: row; /* Työpöytä: Välilehti sivulla, sisältö vieressä */
+                border-bottom: none;
+                border-right: 2px solid var(--brand-black);
+            }
+        }
         .archive-folder:last-child {
+            border-bottom: none;
             border-right: none;
         }
 
-        .archive-folder:hover {
-            flex: 8;
+        /* Hover- ja Active-tilat */
+        .archive-folder:hover,
+        .archive-folder.active {
+            flex: 4; /* Mobiili: laajenee maltillisesti pystysuunnassa */
+        }
+        @media (min-width: 768px) {
+            .archive-folder:hover,
+            .archive-folder.active {
+                flex: 8; /* Työpöytä: laajenee reilusti vaakasuunnassa */
+            }
         }
 
         .archive-tab {
-            width: 50px;
-            min-width: 50px;
-            height: 100%;
+            width: 100%;
+            height: 45px;
+            min-height: 45px;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 0.75rem;
-            border-right: 1px dashed rgba(0,0,0,0.3);
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0 1rem;
+            border-bottom: 1px dashed rgba(0,0,0,0.3); /* Vaakaviiva mobiilissa */
             position: relative;
             z-index: 2;
             background-color: inherit;
         }
         @media (min-width: 768px) {
+            .archive-tab { 
+                width: 50px; 
+                min-width: 50px; 
+                height: 100%;
+                min-height: unset;
+                justify-content: center;
+                align-items: flex-start;
+                padding-top: 0.75rem;
+                padding-left: 0;
+                border-bottom: none;
+                border-right: 1px dashed rgba(0,0,0,0.3); /* Pystyviiva työpöydällä */
+            }
+        }
+        @media (min-width: 1024px) {
             .archive-tab { width: 70px; min-width: 70px; padding-top: 1rem; }
         }
 
         .archive-tab-text {
-            writing-mode: vertical-rl;
+            writing-mode: horizontal-tb; /* Mobiili: helppolukuinen vaakatason teksti */
             font-family: var(--font-mono);
             font-weight: bold;
             font-size: 0.85rem;
@@ -290,18 +328,29 @@
             white-space: nowrap;
             color: var(--brand-black);
         }
+        @media (min-width: 768px) {
+            .archive-tab-text {
+                writing-mode: vertical-rl; /* Työpöytä: pystysuuntainen teksti */
+            }
+        }
         
         .archive-folder.bg-black .archive-tab-text {
             color: var(--brand-white);
         }
         .archive-folder.bg-black .archive-tab {
-            border-right: 1px dashed rgba(255,255,255,0.3);
+            border-bottom: 1px dashed rgba(255,255,255,0.3);
+        }
+        @media (min-width: 768px) {
+            .archive-folder.bg-black .archive-tab {
+                border-bottom: none;
+                border-right: 1px dashed rgba(255,255,255,0.3);
+            }
         }
 
         .archive-content {
             flex-grow: 1;
             min-width: 0;
-            padding: 2rem;
+            padding: 1rem; /* Mobiili padding */
             opacity: 0;
             transition: opacity 0.4s ease;
             transition-delay: 0s;
@@ -310,8 +359,12 @@
             justify-content: center;
             position: relative;
         }
+        @media (min-width: 768px) {
+            .archive-content { padding: 2rem; }
+        }
 
-        .archive-folder:hover .archive-content {
+        .archive-folder:hover .archive-content,
+        .archive-folder.active .archive-content {
             opacity: 1;
             transition-delay: 0.3s;
         }
@@ -329,7 +382,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            mix-blend-mode: multiply; /* Sulauttaa kuvan taustaväriin tyylikkäästi */
+            mix-blend-mode: multiply; 
             opacity: 0.9;
         }
 
@@ -337,11 +390,15 @@
             position: relative;
             z-index: 2;
             font-family: var(--font-display);
-            font-size: 3rem;
+            font-size: 2rem; /* Mobiili otsikkokoko */
             text-transform: uppercase;
             letter-spacing: -0.02em;
             color: var(--brand-black);
         }
+        @media (min-width: 768px) {
+            .archive-title { font-size: 3rem; }
+        }
+        
         .archive-folder.bg-black .archive-title {
             color: var(--brand-white);
         }
@@ -635,5 +692,20 @@
         </div>
     </footer>
 
+    <!-- Kosketusnäyttöjen logiikka: napauttaminen (tap) avaa kansion mobiililaitteilla -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const folders = document.querySelectorAll('.archive-folder');
+            
+            folders.forEach(folder => {
+                folder.addEventListener('click', () => {
+                    // Poista "active" luokka kaikilta
+                    folders.forEach(f => f.classList.remove('active'));
+                    // Lisää "active" klikatulle
+                    folder.classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
