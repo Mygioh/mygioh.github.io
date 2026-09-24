@@ -114,6 +114,43 @@
         }
         @media (min-width: 768px) { .menu-btn { display: none; } }
 
+        /* Mobiilivalikon tyylit */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--brand-orange);
+            z-index: 90; /* Yläpalkki (header) on z-index: 100, joten tämä liukuu sen alta */
+            padding: 100px 2rem 2rem 2rem; /* Yläpadding estää valikon jäämisen yläpalkin alle */
+            display: flex;
+            flex-direction: column;
+            transform: translateY(-100%);
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1); /* Sulava, hieman napakka animaatio */
+        }
+        @media (min-width: 768px) {
+            .mobile-menu { display: none; }
+        }
+        .mobile-menu.is-open {
+            transform: translateY(0);
+        }
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .mobile-link {
+            font-family: var(--font-display);
+            font-size: 12vw;
+            font-weight: bold;
+            color: var(--brand-black);
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--brand-black);
+            padding-bottom: 0.5rem;
+        }
+
         .hero {
             display: grid;
             grid-template-columns: 1fr;
@@ -551,8 +588,17 @@
             <a href="#projektit">02 - PROJEKTIT</a>
             <a href="#ota-yhteytta">03 - OTA YHTEYTTÄ</a>
         </nav>
-        <button class="menu-btn">VALIKKO</button>
+        <button class="menu-btn" id="menuBtn">VALIKKO</button>
     </header>
+
+    <!-- Mobiilivalikon taso (Overlay) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#tekija" class="mobile-link">01 - TEKIJÄ</a>
+            <a href="#projektit" class="mobile-link">02 - PROJEKTIT</a>
+            <a href="#ota-yhteytta" class="mobile-link">03 - OTA YHTEYTTÄ</a>
+        </nav>
+    </div>
 
     <main>
         <section class="hero" id="tekija">
@@ -703,6 +749,32 @@
                     folders.forEach(f => f.classList.remove('active'));
                     // Lisää "active" klikatulle
                     folder.classList.add('active');
+                });
+            });
+
+            // Mobiilivalikon logiikka
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            // Avaa/sulje valikko napista
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('is-open');
+                if (mobileMenu.classList.contains('is-open')) {
+                    menuBtn.textContent = 'SULJE';
+                    document.body.style.overflow = 'hidden'; // Estää taustan rullaamisen kun valikko on auki
+                } else {
+                    menuBtn.textContent = 'VALIKKO';
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Sulje valikko automaattisesti kun linkkiä painetaan
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('is-open');
+                    menuBtn.textContent = 'VALIKKO';
+                    document.body.style.overflow = '';
                 });
             });
         });
