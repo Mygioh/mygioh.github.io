@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRAND - Brutalist Portfolio</title>
+    <title>JMPF - Portfolio</title>
     <!-- Tuodaan Google Fontsista Space Grotesk, Lato ja JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +20,11 @@
         }
 
         /* Base resets */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 75px; /* Estää sticky-headeria peittämästä sisältöä ankkurilinkeissä */
+        }
+
         *, *::before, *::after {
             box-sizing: border-box;
             border-radius: 0 !important; /* Enforce sharp edges */
@@ -127,13 +132,13 @@
 
         .hero-title {
             font-family: var(--font-display);
-            font-size: 18vw;
+            font-size: 15vw;
             line-height: 0.85;
             text-transform: uppercase;
             letter-spacing: -0.05em;
             margin-bottom: 1.5rem;
         }
-        @media (min-width: 768px) { .hero-title { font-size: 11vw; } }
+        @media (min-width: 768px) { .hero-title { font-size: 10vw; } }
 
         .text-brand-orange { color: var(--brand-orange); }
 
@@ -143,19 +148,6 @@
             margin-bottom: 2.5rem;
         }
         @media (min-width: 768px) { .hero-desc { font-size: 1.25rem; } }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            background-color: var(--brand-black);
-            color: var(--brand-white);
-            padding: 0.75rem 1.5rem;
-            font-size: 0.875rem;
-            font-weight: bold;
-            transition: background-color 0.2s;
-        }
-        .btn-primary:hover { background-color: var(--brand-orange); }
-        .btn-primary svg { width: 1rem; height: 1rem; margin-left: 0.5rem; }
 
         .slashes {
             margin-top: 3rem;
@@ -277,18 +269,19 @@
             height: 100%;
             display: flex;
             justify-content: center;
-            padding-top: 1.5rem;
+            align-items: flex-start;
+            padding-top: 0.75rem;
             border-right: 1px dashed rgba(0,0,0,0.3);
             position: relative;
             z-index: 2;
+            background-color: inherit;
         }
         @media (min-width: 768px) {
-            .archive-tab { width: 70px; min-width: 70px; padding-top: 2rem; }
+            .archive-tab { width: 70px; min-width: 70px; padding-top: 1rem; }
         }
 
         .archive-tab-text {
             writing-mode: vertical-rl;
-            transform: rotate(180deg); /* Kääntää tekstin siten, että kirjaimien yläosa osoittaa vasemmalle */
             font-family: var(--font-mono);
             font-weight: bold;
             font-size: 0.85rem;
@@ -495,33 +488,26 @@
 <body>
 
     <header class="header">
-        <div class="header-logo">JMPF</div>
+        <div class="header-logo">// JMPF</div>
         <nav class="header-nav">
-            <a href="#">01 - TEKIJÄ</a>
-            <a href="#">02 - PROJEKTIT</a>
-            <a href="#">03 - OTA YHTEYTTÄ</a>
+            <a href="#tekija">01 - TEKIJÄ</a>
+            <a href="#projektit">02 - PROJEKTIT</a>
+            <a href="#ota-yhteytta">03 - OTA YHTEYTTÄ</a>
         </nav>
         <button class="menu-btn">VALIKKO</button>
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero" id="tekija">
             <!-- Left Column -->
             <div class="hero-content">
                 <h1 class="hero-title">
-                    Make<br>
-                    Your<br>
-                    Mark<span class="text-brand-orange">.</span>
+                    Meikä<br>
+                    on Jere<span class="text-brand-orange">.</span>
                 </h1>
                 <p class="hero-desc">
-                    Brand identities. Digital experiences.
+                    Moikka, meikä.
                 </p>
-                <div>
-                    <a href="#" class="btn-primary">
-                        Start a conversation
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M5 19L19 5M19 5H8M19 5V16"></path></svg>
-                    </a>
-                </div>
                 
                 <div class="slashes">
                     <div class="slash"></div>
@@ -534,14 +520,14 @@
             <div class="hero-image-wrapper">
                 <img src="image_3e4003.jpg" alt="Brand Portrait" class="hero-image" onerror="this.src='https://placehold.co/800x1000/111111/444444?text=PORTRAIT';">
                 <div class="hero-vertical-text">
-                    <h2>Brand</h2>
+                    <h2>PORTFOLIO</h2>
                 </div>
             </div>
         </section>
 
         <!-- Red Banner -->
-        <section class="banner">
-            <h2>Tuoreet Projektit.</h2>
+        <section class="banner" id="projektit">
+            <h2>Projektit.</h2>
         </section>
 
         <section class="archive-section">
@@ -549,41 +535,41 @@
             <!-- Folder 1 -->
             <div class="archive-folder bg-olive">
                 <div class="archive-tab">
-                    <span class="archive-tab-text">GRID DAILY_01-05</span>
+                    <span class="archive-tab-text"> 001 // ATN</span>
                 </div>
                 <div class="archive-content">
-                    <h3 class="archive-title">Visual Studies</h3>
+                    <h3 class="archive-title">Airtrack Nordic</h3>
                 </div>
             </div>
 
             <!-- Folder 2 -->
             <div class="archive-folder bg-beige">
                 <div class="archive-tab">
-                    <span class="archive-tab-text">ARCHIVE LOG</span>
+                    <span class="archive-tab-text"> 002 // HB.FI</span>
                 </div>
                 <div class="archive-content">
-                    <h3 class="archive-title">Architecture</h3>
+                    <h3 class="archive-title">Hobbybox</h3>
                 </div>
             </div>
 
             <!-- Folder 3 -->
             <div class="archive-folder bg-sand">
                 <div class="archive-tab">
-                    <span class="archive-tab-text">CODE_001 // DRIFT</span>
+                    <span class="archive-tab-text"> 003 // KARELIA</span>
                 </div>
                 <div class="archive-content">
-                    <h3 class="archive-title">Void Replies</h3>
+                    <h3 class="archive-title">Karelia-ammattikorkeakoulu</h3>
                 </div>
             </div>
 
             <!-- Folder 4 (With Image) -->
             <div class="archive-folder bg-steel">
                 <div class="archive-tab">
-                    <span class="archive-tab-text">CODE_002 // FALLING</span>
+                    <span class="archive-tab-text"> 004 // EXTRAT</span>
                 </div>
                 <!-- Image Wrapper -->
                 <div class="archive-image-wrapper">
-                    <img src="image_335abe.jpg" alt="Falling Archive Image">
+                    <img src="https://i.pinimg.com/736x/9e/86/f9/9e86f9435ef59632b5d22fb2ee52ac7a.jpg" alt="Falling Archive Image">
                 </div>
                 <div class="archive-content">
                     <!-- Text hidden behind image, or overlaying it -->
@@ -594,7 +580,7 @@
             <!-- Folder 5 -->
             <div class="archive-folder bg-black">
                 <div class="archive-tab">
-                    <span class="archive-tab-text">CODE_003 // SIGNAL</span>
+                    <span class="archive-tab-text"> 005 // ARCHIVE</span>
                 </div>
                 <div class="archive-content">
                     <h3 class="archive-title">After Work</h3>
@@ -604,7 +590,7 @@
         </section>
 
         <!-- Contact / Services Section -->
-        <section class="services-section">
+        <section class="services-section" id="ota-yhteytta">
             <div class="services-grid">
                 <!-- Left -->
                 <div>
@@ -621,7 +607,7 @@
 
                 <!-- Right (Contact Links) -->
                 <div class="services-list">
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="service-item">
+                    <a href="https://www.linkedin.com/in/aboutmykka/" target="_blank" rel="noopener noreferrer" class="service-item">
                         <span class="service-label"><span class="service-num">01</span> LinkedIn</span>
                         <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M5 19L19 5M19 5H8M19 5V16"></path></svg>
                     </a>
