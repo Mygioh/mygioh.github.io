@@ -588,7 +588,7 @@
             <a href="#projektit">02 - PROJEKTIT</a>
             <a href="#ota-yhteytta">03 - OTA YHTEYTTÄ</a>
         </nav>
-        <button class="menu-btn" id="menuBtn">VALIKKO</button>
+        <button class="menu-btn" id="menuBtn">///</button>
     </header>
 
     <!-- Mobiilivalikon taso (Overlay) -->
@@ -761,10 +761,10 @@
             menuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('is-open');
                 if (mobileMenu.classList.contains('is-open')) {
-                    menuBtn.textContent = 'SULJE';
+                    menuBtn.textContent = '---';
                     document.body.style.overflow = 'hidden'; // Estää taustan rullaamisen kun valikko on auki
                 } else {
-                    menuBtn.textContent = 'VALIKKO';
+                    menuBtn.textContent = '///';
                     document.body.style.overflow = '';
                 }
             });
@@ -773,7 +773,7 @@
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.remove('is-open');
-                    menuBtn.textContent = 'VALIKKO';
+                    menuBtn.textContent = '///';
                     document.body.style.overflow = '';
                 });
             });
